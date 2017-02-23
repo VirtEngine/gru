@@ -10,9 +10,9 @@ pkg.state = "present"
 systemd_dir = "/etc/systemd/system/memcached.service.d/"
 
 -- Manage the systemd drop-in unit directory
-unit_dir = resource.file.new(systemd_dir)
+unit_dir = resource.directory.new(systemd_dir)
 unit_dir.state = "present"
-unit_dir.filetype = "directory"
+--unit_dir.filetype = "directory"
 unit_dir.require = {
    pkg:ID(),
 }
@@ -21,7 +21,7 @@ unit_dir.require = {
 unit_file = resource.file.new(systemd_dir .. "override.conf")
 unit_file.state = "present"
 unit_file.mode = tonumber("0644", 8)
-unit_file.source = "data/memcached/memcached-override.conf"
+unit_file.source = "gru/site/data/memcached/memcached-override.conf"
 unit_file.require = {
    unit_dir:ID(),
 }
