@@ -31,23 +31,22 @@ remote.command = "wget -O /var/lib/megam/bitnami/bitnami-run  " .. bitnami_url
 mode = resource.shell.new("mode")
 mode.command = "chmod 755 " .. bitnami_file
 
-if bitnami_database_password then
 src = resource.shell.new("db")
+
+if bitnami_database_password then
+
 src.command = bitnami_file .. " --mode unattended  --base_user " .. bitnami_username  .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email .. " --database_root_password " .. bitnami_database_password
 
 elseif bitnami_prestashop_site then
 
-src = resource.shell.new("db")
 src.command = bitnami_file .. " --mode unattended  --base_user " .. bitnami_username  .. " --base_password " .. bitnami_password ..  " --base_mail " .. bitnami_email  .. " --prestashop_site " .. bitnami_prestashop_site
 
 elseif bitnami_owncloud_site then
 
-src = resource.shell.new("db")
 src.command = bitnami_file  .. " --mode unattended  --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email  .. " --ownCloud_site " .. bitnami_owncloud_site
 
 else
 
-src = resource.shell.new("db")
 src.command = bitnami_file  .. " --mode unattended  --base_user " .. bitnami_username .. " --base_password " .. bitnami_password ..  " --base_mail " .. bitnami_email
 
 end
