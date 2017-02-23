@@ -5,10 +5,6 @@
 -- Manage the memcached package
 f = loadfile("gru/gulp/param.lua")
 f()
---foo(credentials.username)
-print("%%%%%%%%%%%%%%%%%%%%%%%55")
-print(credentials.password)
-
 
 arc = resource.shell.new("cd /var/lib")
 arc.command = "wget -O /var/lib/mysql-community-release-el7-5.noarch.rpm http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm"
