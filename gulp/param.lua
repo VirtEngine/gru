@@ -11,3 +11,5 @@ bitnami_url = "https://s3-ap-southeast-1.amazonaws.com/megampub/bitnami/e-Commer
 bitnami_prestashop_site = "192.168.0.127"
 --bitnami_owncloud_site = "2345"
 --bitnami_database_password = "678"
+tosca_type = "nodejs"
+scm = "https://github.com/verticeapps/node_etherpad.git"
