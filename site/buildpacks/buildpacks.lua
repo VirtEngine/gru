@@ -15,7 +15,7 @@ mode.command = "chmod 755 " ..  gru_dir .. "install-buildpacks "
 per = resource.shell.new("permission")
 per.command = "chmod 755 " ..  gru_dir .. "build.sh "
 
-packs = resource.shell.new("install buildpackage")
+packs = resource.shell.new("installbuildpackage")
 packs.command = gru_dir .. "install-buildpacks"
 
 git = resource.package.new("git")
@@ -34,7 +34,6 @@ for value in string.gmatch(scm,"%w+") do
     appname [index] = value
     index = index + 1
 end
-print(appname[5])
 
 
 os.execute("mv " .. appname[5] .. "* " ..  build_dir )

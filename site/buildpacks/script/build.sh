@@ -25,11 +25,8 @@ mkdir -p $app_dir
 mkdir -p $cache_root
 mkdir -p $buildpack_root
 mkdir -p $build_root/.profile.d
-echo "*************************881*********"
-echo $slug_file
+
 function output_redirect() {
-echo "***********************88822222222222"
-echo $slug_file
     if [[ "$slug_file" == "-" ]]; then
         cat - 1>&2
     else
@@ -38,17 +35,16 @@ echo $slug_file
 }
 
 function echo_title() {
-  echo "****************************8823543"
+
     echo $'\e[1G----->' $* | output_redirect
 }
 
 function echo_normal() {
-  echo "******************8844444444444"
     echo $'\e[1G      ' $* | output_redirect
 }
 
 function ensure_indent() {
-    echo "******************88888555555555"
+
     while read line; do
         if [[ "$line" == --* ]]; then
             echo $'\e[1G'$line | output_redirect
@@ -59,7 +55,7 @@ function ensure_indent() {
 }
 
 ## Copy application code over
-echo "*************************886666666666"
+
 if [ -d "/var/lib/megam/app" ]; then
     cp -rf /var/lib/megam/app/. $app_dir
    # chown -R slug:slug $app_dir
@@ -69,11 +65,11 @@ fi
 
 # In heroku, there are two separate directories, and some
 # buildpacks expect that.
-echo "*********************************88777777777777777777"
+
 cp -r $app_dir/. $build_root
 
 ## Buildpack fixes
-echo "**************************888888888888888888888888"
+
 export APP_DIR="$app_dir"
 export HOME="$app_dir"
 export REQUEST_ID=$(openssl rand -base64 32)
@@ -93,15 +89,15 @@ if [[ -n "$SSH_KEY" ]]; then
 fi
 
 ## Buildpack detection
-echo "************************999999999999999999999"
+
 buildpacks=($buildpack_root/*)
-echo $buildpacks
+
 
 #selected_buildpack="/tmp/buildpacks/heroku-buildpack-nodejs.git"
 
 selected_buildpack=$1
 
-echo "*****************************810"
+
 if [[ -n "$BUILDPACK_URL" ]]; then
     echo_title "Fetching custom buildpack"
 
@@ -149,7 +145,7 @@ export CURL_CONNECT_TIMEOUT="30"
 export CURL_TIMEOUT="180"
 
 ## Buildpack compile
-echo "**************#######################"
+
 echo $selected_buildpack
 
 $selected_buildpack/bin/compile "$build_root" "$cache_root" | ensure_indent
