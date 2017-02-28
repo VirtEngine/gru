@@ -12,7 +12,7 @@ arc.command = "wget -O /var/lib/mysql-community-release-el7-5.noarch.rpm http://
 des = resource.shell.new("des")
 des.command = "rpm -ivh /var/lib/mysql-community-release-el7-5.noarch.rpm"
 
-pkg = resource.package.new(credentials.pack)
+pkg = resource.package.new("mysql-server")
 pkg.state = "present"
 
 -- Manage the memcached service
