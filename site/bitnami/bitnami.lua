@@ -4,7 +4,8 @@
 
 -- pass parameter
 
-f = loadfile("gru/gulp/param.lua")
+dir = "/var/lib/megam/"
+f = loadfile(dir .. "gru/gulp/param.lua")
 f()
 
 bitnami_dir = "/var/lib/megam/bitnami/"

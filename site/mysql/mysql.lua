@@ -2,11 +2,12 @@
 -- Gru module for installing and configuring mysql
 --
 
--- Manage the memcached package
-f = loadfile("gru/gulp/param.lua")
+-- get a attribute
+dir = "/var/lib/megam/"
+f = loadfile(dir .. "gru/gulp/param.lua")
 f()
 
-arc = resource.shell.new("cd /var/lib")
+arc = resource.shell.new("get")
 arc.command = "wget -O /var/lib/mysql-community-release-el7-5.noarch.rpm http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm"
 
 des = resource.shell.new("des")
