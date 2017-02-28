@@ -1,4 +1,3 @@
-mysql_pack = "mysql-server"
 
 bitnami_username ="admin"
 
