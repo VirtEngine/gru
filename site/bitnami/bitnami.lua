@@ -26,6 +26,7 @@ end
 --get a file from remote repository
 
 remote = resource.shell.new("remote")
+remote.state = "present"
 remote.command = "wget -O /var/lib/megam/bitnami/bitnami-run  " .. bitnami_url
 
 --change permission of file
