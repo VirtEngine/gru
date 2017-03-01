@@ -28,7 +28,8 @@ elseif tosca_type == "apache" then
 elseif tosca_type == "bitnami" then
   m = loadfile(dir .. "gru/site/bitnami/bitnami.lua")
   m()
-
+  x = loadfile(dir .. "gru/site/bitnami/bitnamirun.lua")
+  x()
 elseif tosca_type == "nodejs" then
   m = loadfile(dir .. "gru/site/buildpacks/buildpacks.lua")
   m()
