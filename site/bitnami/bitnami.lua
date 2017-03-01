@@ -16,7 +16,7 @@ mode = resource.shell.new("mode")
 mode.command = "chmod 755 " .. bitnami_dir
 
 exe = resource.shell.new("sh")
-exe.command = bitnami_dir  ..   bitnami_url  .. " ;"
+exe.command = bitnami_dir  ..   bitnami_url  
 
 
 src = resource.shell.new("db")
