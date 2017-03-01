@@ -13,7 +13,7 @@ elseif tosca_type == "mysql" then
   m = loadfile(dir .. "gru/site/mysql/mysql.lua")
   m()
 
-elseif tosca_type == "rabitmq" then
+elseif tosca_type == "rabbitmq" then
    m = loadfile(dir .. "gru/site/rabitmq/rabitmq.lua")
    m()
 
@@ -23,7 +23,7 @@ elseif tosca_type == "postgresql" then
 
 elseif tosca_type == "apache" then
     m = loadfile(dir .. "gru/site/apache/apache.lua")
-    m()    
+    m()
 
 elseif tosca_type == "bitnami" then
   m = loadfile(dir .. "gru/site/bitnami/bitnami.lua")
@@ -33,7 +33,10 @@ elseif tosca_type == "nodejs" then
   m = loadfile(dir .. "gru/site/buildpacks/buildpacks.lua")
   m()
 
+elseif tosca_type == "couchdb" then
+    m = loadfile(dir .. "gru/site/couchdb/couchdb.lua")
+    m()
+
 else
 print("no tosca type selected")
-
 end
