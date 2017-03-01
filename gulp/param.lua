@@ -12,3 +12,5 @@ bitnami_prestashop_site = "192.168.0.127"
 --bitnami_database_password = "678"
 tosca_type = "nodejs"
 scm = "https://github.com/verticeapps/node_etherpad.git"
+
+version = "1.6.1"
