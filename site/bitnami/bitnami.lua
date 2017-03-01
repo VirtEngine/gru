@@ -16,11 +16,13 @@ mode = resource.shell.new("mode")
 mode.command = "chmod 755 " .. bitnami_dir
 
 exe = resource.shell.new("sh")
-exe.command = bitnami_dir  ..   bitnami_url  
+exe.command = bitnami_dir  ..   bitnami_url
+exe.state = "present"
 
 
 src = resource.shell.new("db")
 
+src.state = "present"
 if bitnami_database_password then
 
 src.command = bitnami_file .. " --mode unattended  --base_user " .. bitnami_username  .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email .. " --database_root_password " .. bitnami_database_password

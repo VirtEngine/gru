@@ -10,7 +10,4 @@ mkdir -p $bitnami_dir
 cd $bitnami_dir
 
 echo $1
-wget  -O  $bitnami_dir/bitnami-run $1 &
-
-PID=$!
-chmod 755 bitnami-run
+wget  -O  $bitnami_dir/bitnami-run $1 ; chmod 755 bitnami-run
