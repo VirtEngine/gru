@@ -19,7 +19,7 @@ svc.state = "running"
 svc.enable = true
 
 -- To access postgresql
-print("access postgresql using - postgres && psql")
+print("access postgresql using su  - postgres && psql")
 
 -- Finally, register the resources to the catalog
 catalog:add(pkg1, pkg2, arc, systemd_reload, svc)
