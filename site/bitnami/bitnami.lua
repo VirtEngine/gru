@@ -16,10 +16,13 @@ mode = resource.shell.new("mode")
 mode.state = "present"
 mode.command = "chmod 755 " .. bitnami_dir
 
+
 exe = resource.shell.new("sh")
 exe.command = bitnami_dir  ..   bitnami_url
 exe.state = "present"
-
+exe.require = {
+   mode:ID(),
+}
 
 -- Finally, register the resources to the catalog
 catalog:add(mode, exe)
