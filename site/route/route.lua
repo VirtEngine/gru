@@ -14,7 +14,7 @@ elseif tosca_type == "mysql" then
   m()
 
 elseif tosca_type == "rabbitmq" then
-   m = loadfile(dir .. "gru/site/rabitmq/rabitmq.lua")
+   m = loadfile(dir .. "gru/site/rabbitmq/rabbitmq.lua")
    m()
 
 elseif tosca_type == "postgresql" then
