@@ -1,0 +1,21 @@
+json_dir=/var/lib/megam/build/package.json
+
+version=$1
+
+if [ "$version" == "" ] ; then
+
+ version="4.0"
+
+fi
+
+cat > $json_dir << EOF
+
+{
+  "engines": {
+    "node": "$version"
+  },
+  "scripts": {
+  "start": "node_etherpad/bin/run.sh --root"
+}
+}
+EOF

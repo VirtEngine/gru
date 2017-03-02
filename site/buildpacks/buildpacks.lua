@@ -44,8 +44,13 @@ ruby.state = "present"
 build = resource.shell.new("build")
 
 if tosca_type == "nodejs" then
+  packmode = resource.shell.new("packmode")
+  packmode.command  = "chmod 755 " ..  grudir .. "package"
 
-  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
+  json = resource.shell.new("json")
+  json.command = grudir .. "package " .. version
+
+  build.command = gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
   node = resource.shell.new("node")
   node.command = "cp " .. node_dir .. "node " ..  " /bin/"
   npm = resource.shell.new("npm")
@@ -73,4 +78,4 @@ elseif tosca_type == "play" then
 end
 
 -- Finally, register the resources to the catalog
-catalog:add(mode, per, packs, git, unit_dir, app,  build, node, npm)
+catalog:add(mode, per, packs, git, unit_dir, app,  build, packmode, json ,node, npm)
