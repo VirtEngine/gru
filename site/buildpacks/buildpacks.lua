@@ -80,4 +80,4 @@ elseif tosca_type == "play" then
 end
 
 -- Finally, register the resources to the catalog
-catalog:add(mode, per, packs, git, unit_dir, app,  build, packmode, json ,node, npm)
+-- catalog:add(mode, per, packs, git, unit_dir, app,  build, packmode, json ,node, npm)
