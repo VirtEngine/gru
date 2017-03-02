@@ -3,27 +3,27 @@
 # Attributes.
 DIR=/var/lib
 version=$1
+
+# If the version is empty assign the latest version.
+if [ "$version" == "" ];
+then
+  version=3.6.5
+fi
+
+# Wget URL for RabbitMQ.
 URL=https://www.rabbitmq.com/releases/rabbitmq-server/v$version/rabbitmq-server-$version-1.noarch.rpm
 
 # Move into local directory.
 cd $DIR
 
-# Wget & install RabbitMQ.
-if [ "$version" != "" ];
-then
-  # Wget RabbitMQ package.
-  wget $URL
+# Wget RabbitMQ package.
+wget $URL
 
-  # Import RabbitMQ key file.
-  rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+# Import RabbitMQ key file.
+rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 
-  # Install RabbitMQ.
-  yum install -y rabbitmq-server-$version-1.noarch.rpm
-else
-  wget https://www.rabbitmq.com/releases/rabbitmq-server/v3.6.5/rabbitmq-server-3.6.5-1.noarch.rpm
-  rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-  yum install -y rabbitmq-server-3.6.5-1.noarch.rpm
-fi
+# Install RabbitMQ.
+yum install -y rabbitmq-server-$version-1.noarch.rpm
 
 # Enable Firewall port in centos to see web interface.
 firewall-cmd --permanent --add-port=15672/tcp

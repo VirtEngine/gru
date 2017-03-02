@@ -17,6 +17,7 @@ init.command = gru_dir .. "rabbitmq.sh " .. version
 
 -- To see web interface
 print("See web interface using http://ipaddress:5984")
+print("Admin user Credentials - VirtEngine & VirtEngine")
 
 -- Finally, register the resources to the catalog
 catalog:add(mode, init)

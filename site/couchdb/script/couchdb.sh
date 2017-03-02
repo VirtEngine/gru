@@ -1,10 +1,16 @@
 #!/bin/sh
 
+# Attributes.
 DIR=/var/lib
-
-# Wget Dependencies URL.
-version=$1
 URL1=http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+version=$1
+
+# If the version is empty assign the latest version.
+if [ "$version" == "" ];
+then
+  version=1.6.1
+fi
+
 URL2=http://apache.mirror.digitalpacific.com.au/couchdb/source/$version/apache-couchdb-$version.tar.gz
 
 # Move into local directory.
@@ -18,20 +24,11 @@ rpm -Uvh epel-release-latest-7.noarch.rpm
 yum install  -y autoconf autoconf-archive automake libtool perl-Test-Harness erlang libicu-devel js-devel curl-devel gcc-c++
 
 # Wget CouchDB URL & install CouchDB.
-if [ "$version" != "" ];
-then
-  wget $URL2
-  tar -xzf apache-couchdb-$version.tar.gz
-  cd apache-couchdb-$version
-  ./configure --with-erlang=/usr/lib64/erlang/usr/include
-  make && make install
-else
-  wget http://apache.mirror.digitalpacific.com.au/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
-  tar -xzf apache-couchdb-1.6.1.tar.gz
-  cd apache-couchdb-1.6.1
-  ./configure --with-erlang=/usr/lib64/erlang/usr/include
-  make && make install
-fi
+wget $URL2
+tar -xzf apache-couchdb-$version.tar.gz
+cd apache-couchdb-$version
+./configure --with-erlang=/usr/lib64/erlang/usr/include
+make && make install
 
 #Create CouchDB user.
 adduser -r --home /usr/local/var/lib/couchdb -M --shell /bin/bash couchdb
