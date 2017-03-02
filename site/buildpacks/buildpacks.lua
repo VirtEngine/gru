@@ -9,6 +9,9 @@ node_dir = "/var/lib/megam/build/.heroku/node/bin/"
 
 build_dir = "/var/lib/megam/app"
 
+git = resource.package.new("git")
+git.state = "present"
+
 mode = resource.shell.new("mode")
 mode.command = "chmod 755 " ..  gru_dir .. "install-buildpacks "
 
@@ -16,27 +19,7 @@ per = resource.shell.new("permission")
 per.command = "chmod 755 " ..  gru_dir .. "build.sh "
 
 packs = resource.shell.new("installbuildpackage")
-packs.command = gru_dir .. "install-buildpacks"
-
-git = resource.package.new("git")
-git.state = "present"
-
-unit_dir = resource.directory.new(build_dir)
-unit_dir.state = "present"
-
-
-app = resource.shell.new("app")
-app.command = "git clone " .. scm
-
-appname = {}
-index = 1
-for value in string.gmatch(scm,"%w+") do
-    appname [index] = value
-    index = index + 1
-end
-
-
-os.execute("mv " .. appname[5] .. "* " ..  build_dir )
+packs.command = gru_dir .. "install-buildpacks "  ..  scm
 
 ruby = resource.package.new("ruby")
 ruby.state = "present"
