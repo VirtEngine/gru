@@ -28,10 +28,10 @@ build = resource.shell.new("build")
 
 if tosca_type == "nodejs" then
   packmode = resource.shell.new("packmode")
-  packmode.command  = "chmod 755 " ..  grudir .. "package "
+  packmode.command  = "chmod 755 " ..  gru_dir .. "package "
 
   json = resource.shell.new("json")
-  json.command = grudir .. "package " .. version
+  json.command = gru_dir .. "package " .. version
 
   build.command = gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
   node = resource.shell.new("node")
