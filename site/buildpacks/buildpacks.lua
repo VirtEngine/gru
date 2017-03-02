@@ -28,7 +28,7 @@ build = resource.shell.new("build")
 
 if tosca_type == "nodejs" then
   packmode = resource.shell.new("packmode")
-  packmode.command  = "chmod 755 " ..  grudir .. "package"
+  packmode.command  = "chmod 755 " ..  grudir .. "package "
 
   json = resource.shell.new("json")
   json.command = grudir .. "package " .. version
