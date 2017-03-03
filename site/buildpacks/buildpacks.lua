@@ -7,63 +7,51 @@ node_dir = "/var/lib/megam/build/.heroku/node/bin/"
 
 build_dir = "/var/lib/megam/app"
 
-git = resource.package.new("git")
-git.state = "present"
-
-catalog:add(git)
 
 mode = resource.shell.new("mode")
-mode.command = "chmod 755 " ..  gru_dir .. "install-buildpacks "
-mode.require = { git:ID() }
-catalog:add(mode)
+mode.state = "present"
+mode.command  = "chmod 755 " ..  gru_dir .. "package "
 
-per = resource.shell.new("permission")
-per.command = "chmod 755 " ..  gru_dir .. "build.sh "
-per.require = {  mode:ID() }
 
-catalog:add(per)
+
+json = resource.shell.new("json")
+json.state = "present"
+json.command = gru_dir .. "package " .. version  .. tosca_type
+json.require = {
+      mode:ID(),
+      }
 
 packs = resource.shell.new("installbuildpackage")
+packs.state = "present"
 packs.command = gru_dir .. "install-buildpacks "  ..  scm
-
-packs.require = { per:ID() }
-
-
-catalog:add(packs)
-
-ruby = resource.package.new("ruby")
-ruby.state = "present"
-
-ruby.require = { packs:ID() }
-
-catalog:add(ruby)
+packs.require = {
+    json:ID(),
+     }
 
 build = resource.shell.new("build")
+build.state = "present"
 
 if tosca_type == "nodejs" then
-  packmode = resource.shell.new("packmode")
-  packmode.command  = "chmod 755 " ..  gru_dir .. "package "
-  packmode.require = { ruby:ID() }
- catalog:add(packmode)
-
-  json = resource.shell.new("json")
-  json.command = gru_dir .. "package " .. version
-  json.require = { packmode:ID() }
-
-catalog:add(json)
 
   build.command = gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
-  build.require = { json:ID() }
-catalog:add(build)
+  build.require = {
+  json:ID(),
+   }
 
   node = resource.shell.new("node")
+  node.state = "present"
   node.command = "cp " .. node_dir .. "node " ..  " /bin/"
+  node.require = {
+  build:ID(),
+  }
 
-catalog:add(node)
   npm = resource.shell.new("npm")
+  npm.state = "present"
   npm.command = "ln -s " .. node_dir  .. "../lib/node_modules/npm/bin/npm-cli.js" .. " /bin/npm"
+  npm.require = {
+  node:ID(),
+  }
 
-catalog:add(npm)
 elseif tosca_type == "java" then
 
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git"
@@ -84,3 +72,5 @@ elseif tosca_type == "play" then
    print("No tosca_type provided")
 
 end
+
+catalog:add(mode, json, packs, build, node, npm)
