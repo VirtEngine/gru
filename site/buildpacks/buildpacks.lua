@@ -35,7 +35,7 @@ if tosca_type == "nodejs" then
 
   build.command = gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
   build.require = {
-  json:ID(),
+  packs:ID(),
    }
 
   node = resource.shell.new("node")
