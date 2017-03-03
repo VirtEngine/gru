@@ -23,7 +23,7 @@ json.require = {
 
 packs = resource.shell.new("installbuildpackage")
 packs.state = "present"
-packs.command = gru_dir .. "install-buildpacks "  ..  scm
+packs.command = "sh " ..  gru_dir .. "install-buildpacks.sh "  ..  scm
 packs.require = {
     json:ID(),
      }
@@ -33,7 +33,7 @@ build.state = "present"
 
 if tosca_type == "nodejs" then
 
-  build.command = gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
+  build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
   build.require = {
   packs:ID(),
    }

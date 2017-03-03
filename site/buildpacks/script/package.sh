@@ -14,7 +14,7 @@ yum install  -y git
 
 yum install -y ruby
 
-chmod 755 $gru_dir/install-buildpacks
+chmod 755 $gru_dir/install-buildpacks.sh
 chmod 755 $gru_dir/build.sh
 mkdir -p /var/lib/megam/build
 if [ "$tosca_type" == "nodejs" ] ; then
