@@ -1,7 +1,13 @@
--- pass parameter
+--
+-- Gru module for installing and configuring mysql
+--
+
+-- get a attribute
 
 f = loadfile("/var/lib/megam/gru/gulp/param.lua")
 f()
+
+--declare a variable
 
 gru_dir = "/var/lib/megam/gru/site/buildpacks/script/"
 
@@ -9,68 +15,57 @@ node_dir = "/var/lib/megam/build/.heroku/node/bin/"
 
 build_dir = "/var/lib/megam/app"
 
-mode = resource.shell.new("mode")
-mode.command = "chmod 755 " ..  gru_dir .. "install-buildpacks "
+--change permission of file
 
-per = resource.shell.new("permission")
-per.command = "chmod 755 " ..  gru_dir .. "build.sh "
+mode = resource.shell.new("mode")
+mode.state = "present"
+mode.command = "chmod 755 " .. gru_dir .. "package.sh "
+
+--execute a script file
+
+json = resource.shell.new("json")
+json.state = "present"
+json.command = "sh " .. gru_dir .. "package.sh " .. version .. tosca_type
+json.require = {
+  mode:ID(),
+}
+
+--install buildpacks
 
 packs = resource.shell.new("installbuildpackage")
-packs.command = gru_dir .. "install-buildpacks"
+packs.state = "present"
+packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm
+packs.require = {
+  json:ID(),
+}
 
-git = resource.package.new("git")
-git.state = "present"
-
-unit_dir = resource.directory.new(build_dir)
-unit_dir.state = "present"
-
-
-app = resource.shell.new("app")
-app.command = "git clone " .. scm
-
-appname = {}
-index = 1
-for value in string.gmatch(scm,"%w+") do
-    appname [index] = value
-    index = index + 1
-end
-
-
-os.execute("mv " .. appname[5] .. "* " ..  build_dir )
-
-ruby = resource.package.new("ruby")
-ruby.state = "present"
+--install and run build
 
 build = resource.shell.new("build")
+build.state = "present"
 
 if tosca_type == "nodejs" then
-
-  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
-  node = resource.shell.new("node")
-  node.command = "cp " .. node_dir .. "node " ..  " /bin/"
-  npm = resource.shell.new("npm")
-  npm.command = "ln -s " .. node_dir  .. "../lib/node_modules/npm/bin/npm-cli.js" .. " /bin/npm"
+  build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type
+  build.require = {
+    packs:ID(),
+  }
 
 elseif tosca_type == "java" then
-
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git"
 
 elseif tosca_type == "php" then
-
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-php.git"
 
 elseif tosca_type == "rails" then
+  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git"
 
-   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git"
 elseif tosca_type == "play" then
+  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-pay.git"
 
- build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-pay.git"
-
- else
-
-   print("No tosca_type provided")
+else
+  print("No tosca_type provided")
 
 end
 
 -- Finally, register the resources to the catalog
-catalog:add(mode, per, packs, git, unit_dir, app,  build, node, npm)
+catalog:add(mode, json, packs, build)

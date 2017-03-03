@@ -165,6 +165,16 @@ if [[ -s "$build_root/.release" ]]; then
     [[ $default_types ]] && echo_normal "Default process types for $buildpack_name -> $default_types"
 fi
 
+node_dir=/var/lib/megam/build/.heroku/node/bin
+tosca_type=$2
+
+if [ "$tosca_type" == "nodejs" ]; then
+	cp  $node_dir/node  /bin/
+	ln -s $node_dir/../lib/node_modules/npm/bin/npm-cli.js /bin/npm
+fi
+
+
+
 # Fix any wayward permissions. We want everything in app to be owned
 # by slug.
 #chown -R slug:slug $build_root/*

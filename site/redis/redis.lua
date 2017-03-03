@@ -11,7 +11,7 @@ svc = resource.service.new("redis")
 svc.state = "running"
 svc.enable = true
 svc.require = {
-   pkg:ID(),
+  pkg:ID(),
 
 }
 

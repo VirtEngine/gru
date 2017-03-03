@@ -1,6 +1,7 @@
 set -eo pipefail
 
 BUILDPACK_INSTALL_PATH="/var/lib/megam/buildpacks"
+GIT_PATH="/var/lib/megam/app/"
 
 
 download_buildpack() {
@@ -26,6 +27,7 @@ download_buildpack() {
 }
 
 mkdir -p $BUILDPACK_INSTALL_PATH
+mkdir -p $GIT_PATH
 
 download_buildpack https://github.com/heroku/heroku-buildpack-multi.git          v1.0.0
 download_buildpack https://github.com/heroku/heroku-buildpack-ruby.git           v150
@@ -35,7 +37,10 @@ download_buildpack https://github.com/heroku/heroku-buildpack-gradle.git        
 download_buildpack https://github.com/heroku/heroku-buildpack-grails.git         v21
 download_buildpack https://github.com/heroku/heroku-buildpack-play.git           v26
 download_buildpack https://github.com/heroku/heroku-buildpack-python.git         v97
-download_buildpack https://github.com/heroku/heroku-buildpack-php.git            v117
+download_buildpack https://github.com/heroku/heroku-buildpack-php.git            v120
 download_buildpack https://github.com/heroku/heroku-buildpack-clojure.git        v75
 download_buildpack https://github.com/heroku/heroku-buildpack-scala.git          v72
 download_buildpack https://github.com/heroku/heroku-buildpack-go.git             v54
+
+cd $GIT_PATH
+git clone $1
