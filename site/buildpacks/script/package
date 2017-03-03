@@ -4,7 +4,6 @@ gru_dir=/var/lib/megam/gru/site/buildpacks/script/
 version=$1
 tosca_type=$2
 
-mkdir -p var/lib/megam/build
 if [ "$version" == "" ] ; then
 
  version="4.0"
@@ -17,8 +16,8 @@ yum install -y ruby
 
 chmod 755 $gru_dir/install-buildpacks
 chmod 755 $gru_dir/build.sh
-
-if [ "$tosca_type" == "nodejs"] ; then
+mkdir -p /var/lib/megam/build
+if [ "$tosca_type" == "nodejs" ] ; then
 cat > $json_dir << EOF
 
 {
