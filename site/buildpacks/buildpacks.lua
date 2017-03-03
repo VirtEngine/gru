@@ -33,24 +33,10 @@ build.state = "present"
 
 if tosca_type == "nodejs" then
 
-  build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git"
+  build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type
   build.require = {
   packs:ID(),
    }
-
-  node = resource.shell.new("node")
-  node.state = "present"
-  node.command = "cp " .. node_dir .. "node " ..  " /bin/"
-  node.require = {
-  build:ID(),
-  }
-
-  npm = resource.shell.new("npm")
-  npm.state = "present"
-  npm.command = "ln -s " .. node_dir  .. "../lib/node_modules/npm/bin/npm-cli.js" .. " /bin/npm"
-  npm.require = {
-  node:ID(),
-  }
 
 elseif tosca_type == "java" then
 
@@ -73,4 +59,4 @@ elseif tosca_type == "play" then
 
 end
 
-catalog:add(mode, json, packs, build, node, npm)
+catalog:add(mode, json, packs, build)
