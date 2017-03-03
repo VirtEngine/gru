@@ -16,7 +16,7 @@ mode.command  = "chmod 755 " ..  gru_dir .. "package.sh "
 
 json = resource.shell.new("json")
 json.state = "present"
-json.command = "sh " .. gru_dir .. "package " .. version  .. tosca_type
+json.command = "sh " .. gru_dir .. "package.sh " .. version  .. tosca_type
 json.require = {
       mode:ID(),
       }
