@@ -19,25 +19,25 @@ build_dir = "/var/lib/megam/app"
 
 mode = resource.shell.new("mode")
 mode.state = "present"
-mode.command  = "chmod 755 " ..  gru_dir .. "package.sh "
+mode.command = "chmod 755 " .. gru_dir .. "package.sh "
 
 --execute a script file
 
 json = resource.shell.new("json")
 json.state = "present"
-json.command = "sh " .. gru_dir .. "package.sh " .. version  .. tosca_type
+json.command = "sh " .. gru_dir .. "package.sh " .. version .. tosca_type
 json.require = {
-      mode:ID(),
-      }
+  mode:ID(),
+}
 
 --install buildpacks
 
 packs = resource.shell.new("installbuildpackage")
 packs.state = "present"
-packs.command = "sh " ..  gru_dir .. "install-buildpacks.sh "  ..  scm
+packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm
 packs.require = {
-    json:ID(),
-     }
+  json:ID(),
+}
 
 --install and run build
 
@@ -47,8 +47,8 @@ build.state = "present"
 if tosca_type == "nodejs" then
   build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type
   build.require = {
-  packs:ID(),
-   }
+    packs:ID(),
+  }
 
 elseif tosca_type == "java" then
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git"
@@ -57,13 +57,13 @@ elseif tosca_type == "php" then
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-php.git"
 
 elseif tosca_type == "rails" then
- build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git"
+  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git"
 
 elseif tosca_type == "play" then
- build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-pay.git"
+  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-pay.git"
 
 else
- print("No tosca_type provided")
+  print("No tosca_type provided")
 
 end
 

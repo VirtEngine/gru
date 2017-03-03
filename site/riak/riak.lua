@@ -8,7 +8,7 @@ f()
 -- Check version is empty.
 
 if (version == '') then
-    version = '2.2.0'
+  version = '2.2.0'
 end
 
 -- find repo version.
@@ -25,7 +25,7 @@ arc.command = "wget -O /var/lib/riak-" .. version .. "-1.el6.x86_64.rpm http://s
 des = resource.shell.new("install")
 des.command = "rpm -ivh /var/lib/riak-".. version .. "-1.el6.x86_64.rpm"
 des.require = {
-   arc:ID(),
+  arc:ID(),
 }
 
 -- Start the riak service.
@@ -33,7 +33,7 @@ des.require = {
 start = resource.shell.new("start_riak")
 start.command = "riak start"
 start.require = {
-   des:ID(),
+  des:ID(),
 }
 
 print("check riak installation using riak ping ")

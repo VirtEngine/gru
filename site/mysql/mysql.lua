@@ -17,7 +17,7 @@ arc.command = "wget -O /var/lib/mysql-community-release-el7-5.noarch.rpm http://
 des = resource.shell.new("des")
 des.command = "rpm -ivh /var/lib/mysql-community-release-el7-5.noarch.rpm"
 des.require = {
-   arc:ID(),
+  arc:ID(),
 }
 
 -- Start MySQL-server.
@@ -25,7 +25,7 @@ des.require = {
 pkg = resource.package.new("mysql-server")
 pkg.state = "present"
 pkg.require = {
-   des:ID(),
+  des:ID(),
 }
 
 -- Manage mysqld service.
@@ -34,7 +34,7 @@ svc = resource.service.new("mysqld")
 svc.state = "running"
 svc.enable = true
 svc.require = {
-   pkg:ID(),
+  pkg:ID(),
 }
 
 -- Finally, register the resources to the catalog

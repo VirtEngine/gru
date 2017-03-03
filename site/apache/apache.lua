@@ -11,7 +11,7 @@ svc = resource.service.new("httpd")
 svc.state = "running"
 svc.enable = true
 svc.require = {
-   pkg:ID(),
+  pkg:ID(),
 
 }
 

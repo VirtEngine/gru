@@ -10,14 +10,14 @@ gru_dir = "/var/lib/megam/gru/site/rabbitmq/script/"
 -- Change mode for script file.
 
 mode = resource.shell.new("mode")
-mode.command = "chmod 755 " ..  gru_dir .. "rabbitmq.sh"
+mode.command = "chmod 755 " .. gru_dir .. "rabbitmq.sh"
 
 -- Run the script file.
 
 init = resource.shell.new("install_RabbitMQ")
 init.command = gru_dir .. "rabbitmq.sh " .. version
 init.require = {
-   mode:ID(),
+  mode:ID(),
 }
 
 -- To see web interface

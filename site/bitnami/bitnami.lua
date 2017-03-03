@@ -18,38 +18,38 @@ mode.command = "chmod 755 " .. bitnami_dir
 
 --execute and download bitnami file
 exe = resource.shell.new("sh")
-exe.command = bitnami_dir  ..   bitnami_url
+exe.command = bitnami_dir .. bitnami_url
 exe.state = "present"
 exe.require = {
-   mode:ID(),
+  mode:ID(),
 }
 
 src = resource.shell.new("db")
 src.state = "present"
 
 if bitnami_database_password then
-src.command = bitnami_file .. " --mode unattended  --base_user " .. bitnami_username  .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email .. " --database_root_password " .. bitnami_database_password
-src.require = {
-   exe:ID(),
-}
+  src.command = bitnami_file .. " --mode unattended --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email .. " --database_root_password " .. bitnami_database_password
+  src.require = {
+    exe:ID(),
+  }
 
 elseif bitnami_prestashop_site then
-src.command = bitnami_file .. " --mode unattended  --base_user " .. bitnami_username  .. " --base_password " .. bitnami_password ..  " --base_mail " .. bitnami_email  .. " --prestashop_site " .. bitnami_prestashop_site
-src.require = {
-   exe:ID(),
-}
+  src.command = bitnami_file .. " --mode unattended --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email .. " --prestashop_site " .. bitnami_prestashop_site
+  src.require = {
+    exe:ID(),
+  }
 
 elseif bitnami_owncloud_site then
-src.command = bitnami_file  .. " --mode unattended  --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email  .. " --ownCloud_site " .. bitnami_owncloud_site
-src.require = {
-   exe:ID(),
-}
+  src.command = bitnami_file .. " --mode unattended --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email .. " --ownCloud_site " .. bitnami_owncloud_site
+  src.require = {
+    exe:ID(),
+  }
 
 else
-src.command = bitnami_file  .. " --mode unattended  --base_user " .. bitnami_username .. " --base_password " .. bitnami_password ..  " --base_mail " .. bitnami_email
-src.require = {
-   exe:ID(),
-}
+  src.command = bitnami_file .. " --mode unattended --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email
+  src.require = {
+    exe:ID(),
+  }
 end
 
 -- Finally, register the resources to the catalog
