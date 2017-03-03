@@ -10,13 +10,13 @@ build_dir = "/var/lib/megam/app"
 
 mode = resource.shell.new("mode")
 mode.state = "present"
-mode.command  = "chmod 755 " ..  gru_dir .. "package "
+mode.command  = "chmod 755 " ..  gru_dir .. "package.sh "
 
 
 
 json = resource.shell.new("json")
 json.state = "present"
-json.command = gru_dir .. "package " .. version  .. tosca_type
+json.command = "sh " .. gru_dir .. "package " .. version  .. tosca_type
 json.require = {
       mode:ID(),
       }

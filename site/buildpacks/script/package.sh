@@ -1,8 +1,8 @@
 json_dir=/var/lib/megam/build/package.json
 gru_dir=/var/lib/megam/gru/site/buildpacks/script/
 
-version=$1
-tosca_type=$2
+version=" "
+tosca_type=$1
 
 if [ "$version" == "" ] ; then
 
