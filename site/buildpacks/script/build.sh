@@ -21,6 +21,16 @@ build_root=/var/lib/megam/build
 cache_root=/tmp/cache
 buildpack_root=/var/lib/megam/buildpacks
 
+scm=$3
+app_file=$build_root
+basename=`echo "${scm##*/}"`
+delgit=`echo ${basename%.*}`
+ if [[ $basename == *".git"* ]]; then
+  app_file=$app_file/$delgit
+ else
+  app_file=$app_file/$basename
+ fi
+
 mkdir -p $app_dir
 mkdir -p $cache_root
 mkdir -p $buildpack_root
@@ -127,10 +137,10 @@ if [[ -n "$BUILDPACK_URL" ]]; then
     fi
 
     selected_buildpack="$buildpack"
-    buildpack_name=$($buildpack/bin/detect "$build_root") && selected_buildpack=$buildpack
+    buildpack_name=$($buildpack/bin/detect "$app_file") && selected_buildpack=$buildpack
 else
     for buildpack in "${buildpacks[@]}"; do
-        buildpack_name=$($buildpack/bin/detect "$build_root") && selected_buildpack=$buildpack && break
+        buildpack_name=$($buildpack/bin/detect "$app_file") && selected_buildpack=$buildpack && break
     done
 fi
 

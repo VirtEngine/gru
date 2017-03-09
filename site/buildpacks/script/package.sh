@@ -1,9 +1,19 @@
-json_dir=/var/lib/megam/build/package.json
-gru_dir=/var/lib/megam/gru/site/buildpacks/script/
 
 version=""
 tosca_type=$1
+scm=$2
+app_dir=""
 
+basename=`echo "${scm##*/}"`
+delgit=`echo ${basename%.*}`
+ if [[ $basename == *".git"* ]]; then
+  app_dir=$delgit
+ else
+  app_dir=$basename
+ fi
+
+json_dir=/var/lib/megam/build/$app_dir/package.json
+gru_dir=/var/lib/megam/gru/site/buildpacks/script/
 if [ "$version" == "" ] ; then
 
  version="4.0"
@@ -21,6 +31,7 @@ chmod 755 $gru_dir/build.sh
 mkdir -p /var/lib/megam/build
 
 if [ "$tosca_type" == "nodejs" ] ; then
+
 cat > $json_dir << EOF
 
 {

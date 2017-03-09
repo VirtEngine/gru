@@ -25,7 +25,7 @@ mode.command = "chmod 755 " .. gru_dir .. "package.sh "
 
 json = resource.shell.new("json")
 json.state = "present"
-json.command = "sh " .. gru_dir .. "package.sh " .. version .. tosca_type
+json.command = "sh " .. gru_dir .. "package.sh " .. version .. tosca_type  .. scm
 json.require = {
   mode:ID(),
 }
@@ -45,14 +45,22 @@ build = resource.shell.new("build")
 build.state = "present"
 
 if tosca_type == "nodejs" then
-  build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type
+  build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type .. scm
   build.require = {
     packs:ID(),
   }
 
 elseif tosca_type == "java" then
-  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git"
-
+  build.command = "sh " .. gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git " .. tosca_type .. scm
+  build.require = {
+    packs:ID(),
+  }
+  tomcat = resource.shell.new("tomcat")
+  tomcat.state = "present"
+  tomcat.command = "sh " .. gru_dir .. "java.sh"
+  tomcat.require = {
+    build:ID(),
+  }
 elseif tosca_type == "php" then
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-php.git"
 
@@ -68,4 +76,4 @@ else
 end
 
 -- Finally, register the resources to the catalog
-catalog:add(mode, json, packs, build)
+catalog:add(mode, json, packs, build, tomcat)
