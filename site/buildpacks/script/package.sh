@@ -1,4 +1,3 @@
-
 version=""
 tosca_type=$1
 scm=$2
@@ -12,7 +11,7 @@ delgit=`echo ${basename%.*}`
   app_dir=$basename
  fi
 
-json_dir=/var/lib/megam/build/$app_dir/package.json
+json_dir=/var/lib/megam/app/$app_dir/package.json
 gru_dir=/var/lib/megam/gru/site/buildpacks/script/
 if [ "$version" == "" ] ; then
 
@@ -43,4 +42,5 @@ cat > $json_dir << EOF
 }
 }
 EOF
+cp -r  $json_dir /var/lib/megam/build
 fi

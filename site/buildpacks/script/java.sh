@@ -6,7 +6,7 @@ wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.41/bin/apache-tomcat-8.0
 
 tar xf apache-tomcat-8.0.41.tar.gz
 
-mv apache-tomcat tomcat
+mv apache-tomcat-8.0.41 tomcat
 
 rm -rf $tomcatdir
 cat > $tomcatdir << EOF
@@ -28,10 +28,7 @@ cat > $service << EOF
     Description=Apache Tomcat
     After=syslog.target network.target
 [Service]
-
     Type=forking
-    User=tomcat
-    Group=tomcat
     Environment=JAVA_HOME=/var/lib/megam/build/.jdk
     Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
     Environment=CATALINA_HOME=/opt/tomcat
@@ -42,6 +39,7 @@ cat > $service << EOF
     ExecStop=/usr/bin/kill -15 $MAINPID
  [Install]
     WantedBy=multi-user.target
+
 EOF
 
 chmod 755 $service
@@ -53,7 +51,7 @@ arr=$(find . -path "**target/*.war")
       cp $i /opt/tomcat/webapps
    done
 
-firewall-cmd --permanent --add-port=8080/tcp sudo firewall-cmd --reload
+firewall-cmd --permanent --add-port=8080/tcp 
 firewall-cmd --reload
 
 systemctl  daemon-reload
