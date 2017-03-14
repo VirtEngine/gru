@@ -27,6 +27,8 @@ chmod 755 $gru_dir/install-buildpacks.sh
 
 chmod 755 $gru_dir/build.sh
 
+cp $gru_dir/forego /var/lib/megam/app/$app_dir
+
 mkdir -p /var/lib/megam/build
 
 if [ "$tosca_type" == "nodejs" ] ; then
@@ -36,11 +38,7 @@ cat > $json_dir << EOF
 {
   "engines": {
     "node": "$version"
-  },
-  "scripts": {
-  "start": "node_etherpad/bin/run.sh --root"
-}
-}
+  }
+  }
 EOF
-cp -r  $json_dir /var/lib/megam/build
 fi
