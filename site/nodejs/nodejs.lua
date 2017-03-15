@@ -4,8 +4,6 @@
 --
 
 dir = "/var/lib/megam/"
-f = loadfile(dir .. "gru/gulp/param.lua")
-f()
 
-m = loadfile(dir .. "gru/site/" .. tosca_type .. "/" .. tosca_type .. ".lua")
+m = loadfile(dir .. "gru/site/buildpacks/buildpacks.lua")
 m()
