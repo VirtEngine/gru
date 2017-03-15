@@ -1,5 +1,6 @@
 --
 -- Gru module for installing and configuring mysql
+-- The require command respresents the serially execute the process.
 --
 
 -- get a attribute.

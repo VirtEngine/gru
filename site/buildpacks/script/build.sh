@@ -21,6 +21,16 @@ build_root=/var/lib/megam/build
 cache_root=/tmp/cache
 buildpack_root=/var/lib/megam/buildpacks
 
+scm=$3
+app_file=""
+basename=`echo "${scm##*/}"`
+delgit=`echo ${basename%.*}`
+ if [[ $basename == *".git"* ]]; then
+  app_file=$build_root/$delgit
+ else
+  app_file=$build_root/$basename
+ fi
+
 mkdir -p $app_dir
 mkdir -p $cache_root
 mkdir -p $buildpack_root
@@ -127,10 +137,10 @@ if [[ -n "$BUILDPACK_URL" ]]; then
     fi
 
     selected_buildpack="$buildpack"
-    buildpack_name=$($buildpack/bin/detect "$build_root") && selected_buildpack=$buildpack
+    buildpack_name=$($buildpack/bin/detect "$app_file") && selected_buildpack=$buildpack
 else
     for buildpack in "${buildpacks[@]}"; do
-        buildpack_name=$($buildpack/bin/detect "$build_root") && selected_buildpack=$buildpack && break
+        buildpack_name=$($buildpack/bin/detect "$app_file") && selected_buildpack=$buildpack && break
     done
 fi
 
@@ -148,9 +158,9 @@ export CURL_TIMEOUT="180"
 
 echo $selected_buildpack
 
-$selected_buildpack/bin/compile "$build_root" "$cache_root" | ensure_indent
+$selected_buildpack/bin/compile "$app_file" "$cache_root" | ensure_indent
 
-$selected_buildpack/bin/release "$build_root" "$cache_root" > $build_root/.release
+$selected_buildpack/bin/release "$app_file" "$cache_root" > $build_root/.release
 
 ## Display process types
 
@@ -165,7 +175,7 @@ if [[ -s "$build_root/.release" ]]; then
     [[ $default_types ]] && echo_normal "Default process types for $buildpack_name -> $default_types"
 fi
 
-node_dir=/var/lib/megam/build/.heroku/node/bin
+node_dir=$app_file/.heroku/node/bin
 tosca_type=$2
 
 if [ "$tosca_type" == "nodejs" ]; then
@@ -173,7 +183,17 @@ if [ "$tosca_type" == "nodejs" ]; then
 	ln -s $node_dir/../lib/node_modules/npm/bin/npm-cli.js /bin/npm
 fi
 
+if [ "$tosca_type" == "java" ]; then
+	cp -r $app_file/.jdk $build_root
+  sh /var/lib/megam/gru/site/buildpacks/script/java.sh
+fi
 
+if [[ -f "$app_file/Procfile" ]]; then
+$app_file/forego start > file.log 2>&1 & disown
+else
+  echo "No Proc file found"
+  exit 0
+fi
 
 # Fix any wayward permissions. We want everything in app to be owned
 # by slug.

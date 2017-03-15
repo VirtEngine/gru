@@ -1,4 +1,5 @@
--- Gru module for installing and configuring mysql
+-- Gru module for installing and configuring riak
+--The require command respresents the serially execute the process.
 --
 
 -- get a attribute
