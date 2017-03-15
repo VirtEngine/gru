@@ -33,15 +33,10 @@ build.state = "present"
 
 if tosca_type == "nodejs" then
   build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type  .. " " .. scm
-  build.require = {
-    json:ID(),
-  }
-
+  
 elseif tosca_type == "java" then
   build.command = "sh " .. gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git " .. tosca_type .. " " ..  scm
-  build.require = {
-    json:ID(),
-  }
+
 elseif tosca_type == "php" then
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-php.git"
 
@@ -55,5 +50,8 @@ else
   print("No tosca_type provided")
 
 end
+build.require = {
+  json:ID(),
+}
 -- Finally, register the resources to the catalog
 catalog:add(packs,json,build)
