@@ -1,5 +1,6 @@
 --
--- Gru module for installing and configuring mysql
+-- Gru module for installing and configuring customizing buildpacks app.
+-- The require command respresents the serially execute the process.
 --
 
 -- get a attribute
@@ -11,25 +12,21 @@ f()
 
 gru_dir = "/var/lib/megam/gru/site/buildpacks/script/"
 
-node_dir = "/var/lib/megam/build/.heroku/node/bin/"
-
-build_dir = "/var/lib/megam/app"
-
---install buildpacks
+--get download heroku buildpacks apps and clone the custom app from github
 
 packs = resource.shell.new("installbuildpackage")
 packs.state = "present"
 packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm
 
-
+-- install ruby and basic require steps executed.
 json = resource.shell.new("json")
 json.state = "present"
-json.command = "sh " .. gru_dir .. "package.sh " .. version .. " " ..  tosca_type  .. " " ..  scm
+json.command = "sh " .. gru_dir .. "package.sh "  ..  scm
 json.require = {
   packs:ID(),
 }
 
---install and run build
+--install the custom buildpacks app and start the procfile
 
 build = resource.shell.new("build")
 build.state = "present"
