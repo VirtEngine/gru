@@ -21,6 +21,10 @@ elseif tosca_type == "postgresql" then
     m = loadfile(dir .. "gru/site/postgresql/postgresql.lua")
     m()
 
+elseif tosca_type == "java" then
+      m = loadfile(dir .. "gru/site/buildpacks/buildpacks.lua")
+      m()
+
 elseif tosca_type == "apache" then
     m = loadfile(dir .. "gru/site/apache/apache.lua")
     m()

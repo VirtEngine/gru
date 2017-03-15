@@ -189,7 +189,8 @@ if [ "$tosca_type" == "java" ]; then
 fi
 
 if [[ -f "$app_file/Procfile" ]]; then
-$app_file/forego start > file.log 2>&1 & disown
+cd $app_file
+./forego start > file.log 2>&1 & disown
 else
   echo "No Proc file found"
   exit 0
