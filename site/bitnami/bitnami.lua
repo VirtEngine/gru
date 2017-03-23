@@ -39,11 +39,33 @@ elseif bitnami_owncloud_site then
 
 else
   src.command = bitnami_file .. " --mode unattended --base_user " .. bitnami_username .. " --base_password " .. bitnami_password .. " --base_mail " .. bitnami_email
-  
+
 end
 
 src.require = {
   exe:ID(),
 }
+
+bitsv = resource.shell.new("bitsv")
+bitsv.state = "present"
+bitsv.command = " lua start.lua "
+bitsv.require = {
+src:ID(),
+}
+svc = resource.service.new("bitnami")
+svc.state = "present"
+svc.state = "running"
+svc.enable = true
+svc.require = {
+   bitsv:ID(),
+}
+start = resource.shell.new("start")
+start.state = "present"
+start.command = " systemctl start bitnami "
+start.require = {
+svc:ID(),
+}
+
+
 -- Finally, register the resources to the catalog
-catalog:add(mode, exe, src)
+catalog:add(mode, exe, src, bitsv, svc, start)
