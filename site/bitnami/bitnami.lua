@@ -50,7 +50,7 @@ bitsv = resource.shell.new("bitsv")
 bitsv.state = "present"
 bitsv.command = " lua start.lua "
 bitsv.require = {
-src.ID(),
+src:ID(),
 }
 svc = resource.service.new("bitnami")
 svc.state = "present"
@@ -63,7 +63,7 @@ start = resource.shell.new("start")
 start.state = "present"
 start.command = " systemctl start bitnami "
 start.require = {
-svc.ID(),
+svc:ID(),
 }
 
 
