@@ -48,7 +48,7 @@ src.require = {
 
 bitsv = resource.shell.new("bitsv")
 bitsv.state = "present"
-bitsv.command = " lua start.lua "
+bitsv.command = " lua /var/lib/megam/gru/site/bitnami/start.lua "
 bitsv.require = {
 src:ID(),
 }
