@@ -33,7 +33,7 @@ build.state = "present"
 
 if tosca_type == "nodejs" then
   build.command = "sh " .. gru_dir .. "build.sh " .. " /var/lib/megam/buildpacks/heroku-buildpack-nodejs.git " .. tosca_type  .. " " .. scm
-  
+
 elseif tosca_type == "java" then
   build.command = "sh " .. gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git " .. tosca_type .. " " ..  scm
 
@@ -44,7 +44,7 @@ elseif tosca_type == "rails" then
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git"
 
 elseif tosca_type == "play" then
-  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-pay.git"
+  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-scala.git " .. tosca_type .. " " ..  scm
 
 else
   print("No tosca_type provided")
