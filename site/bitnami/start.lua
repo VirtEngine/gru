@@ -1,13 +1,13 @@
 f = loadfile("/var/lib/megam/gru/gulp/param.lua")
 f()
 
+et = loadfile("/var/lib/megam/gru/site/bitnami/etlua.lua")
+et()
 
-local etlua = require "etlua"
-
-local template = etlua.compile([[
+local template = et().compile([[
 
 [Unit]
-    Description=bitnami<%= appname %>
+    Description=bitnami<%= bitnami_app %>
     After=syslog.target network.target
 [Service]
     Type=forking
