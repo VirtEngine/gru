@@ -188,6 +188,12 @@ if [ "$tosca_type" == "java" ]; then
   sh /var/lib/megam/gru/site/buildpacks/script/java.sh
 fi
 
+if [ "$tosca_type" == "play" ]; then
+export JAVA_HOME=$app_file/.jdk
+export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+
 if [[ -f "$app_file/Procfile" ]]; then
 cd $app_file
 ./forego start > file.log 2>&1 & disown

@@ -2,11 +2,11 @@ tomcatdir=/opt/tomcat/conf/tomcat-users.xml
 service=/etc/systemd/system/tomcat.service
 cd  /opt
 
-wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.41/bin/apache-tomcat-8.0.41.tar.gz
+wget https://s3-ap-southeast-1.amazonaws.com/megampub/gru/tomcat/apache-tomcat-8.0.42.tar.gz
 
-tar xf apache-tomcat-8.0.41.tar.gz
+tar xf apache-tomcat-8.0.42.tar.gz
 
-mv apache-tomcat-8.0.41 tomcat
+mv apache-tomcat-8.0.42 tomcat
 
 rm -rf $tomcatdir
 cat > $tomcatdir << EOF
@@ -36,7 +36,6 @@ cat > $service << EOF
     Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
     Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
     ExecStart=/opt/tomcat/bin/startup.sh
-    ExecStop=/usr/bin/kill -15 $MAINPID
  [Install]
     WantedBy=multi-user.target
 
@@ -51,8 +50,7 @@ arr=$(find . -path "**target/*.war")
       cp $i /opt/tomcat/webapps
    done
 
-firewall-cmd --permanent --add-port=8080/tcp 
+firewall-cmd --permanent --add-port=8080/tcp
 firewall-cmd --reload
 
 systemctl  daemon-reload
-systemctl start tomcat
