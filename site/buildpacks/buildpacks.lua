@@ -16,7 +16,7 @@ gru_dir = "/var/lib/megam/gru/site/buildpacks/script/"
 
 packs = resource.shell.new("installbuildpackage")
 packs.state = "present"
-packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm
+packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm  .. " "  .. tosca_type
 
 -- install ruby and basic require steps executed.
 json = resource.shell.new("json")
@@ -38,10 +38,10 @@ elseif tosca_type == "java" then
   build.command = "sh " .. gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-java.git " .. tosca_type .. " " ..  scm
 
 elseif tosca_type == "php" then
-  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-php.git"
+build.command = "sh " .. gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-php.git " .. tosca_type .. " " ..  scm
 
 elseif tosca_type == "rails" then
-  build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git"
+build.command = "sh " .. gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-ruby.git " .. tosca_type .. " " ..  scm
 
 elseif tosca_type == "play" then
   build.command = gru_dir .. "build.sh" .. " /var/lib/megam/buildpacks/heroku-buildpack-scala.git " .. tosca_type .. " " ..  scm

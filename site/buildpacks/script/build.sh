@@ -188,6 +188,17 @@ if [ "$tosca_type" == "java" ]; then
   sh /var/lib/megam/gru/site/buildpacks/script/java.sh
 fi
 
+if [ "$tosca_type" == "php" ]; then
+  cat > /root/.bashrc << EOF
+export PATH=$app_file/vendor/heroku/heroku-buildpack-php/bin:$app_file/.heroku/php/sbin:$app_file/.heroku/php/bin:$PATH
+EOF
+ source /root/.bashrc
+rm -rf $appfile/Procfile
+    cat > $app_file/Procfile << EOF
+web: heroku-php-apache2 -p 8080
+EOF
+fi
+
 if [ "$tosca_type" == "play" ]; then
 export JAVA_HOME=$app_file/.jdk
 export PATH=$JAVA_HOME/bin:$PATH
@@ -202,6 +213,9 @@ else
   exit 0
 fi
 
+if [[ "$tosca_type" == "php" ]]; then
+chmod 0667 /tmp/heroku.fcgi.8080.sock
+fi
 # Fix any wayward permissions. We want everything in app to be owned
 # by slug.
 #chown -R slug:slug $build_root/*
