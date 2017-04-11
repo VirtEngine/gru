@@ -25,7 +25,7 @@ cp $gru_dir/forego /var/lib/megam/app/$app_dir
 
 if [[ $tosca_type == "php" ]]; then
 
-  yum install bzip2-devel postgresql-libs-9.2.18-1.el7.i686 postgresql-devel
+  yum install -y bzip2-devel postgresql-libs-9.2.18-1.el7.i686 postgresql-devel
 
   ln -s /usr/lib64/libbz2.so.1.0.6 /usr/lib64/libbz2.so.1.0
 

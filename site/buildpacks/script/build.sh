@@ -189,10 +189,7 @@ if [ "$tosca_type" == "java" ]; then
 fi
 
 if [ "$tosca_type" == "php" ]; then
-  cat > /root/.bashrc << EOF
 export PATH=$app_file/vendor/heroku/heroku-buildpack-php/bin:$app_file/.heroku/php/sbin:$app_file/.heroku/php/bin:$PATH
-EOF
- source /root/.bashrc
 rm -rf $appfile/Procfile
     cat > $app_file/Procfile << EOF
 web: heroku-php-apache2 -p 8080
@@ -214,6 +211,7 @@ else
 fi
 
 if [[ "$tosca_type" == "php" ]]; then
+	sleep 5
 chmod 0667 /tmp/heroku.fcgi.8080.sock
 fi
 # Fix any wayward permissions. We want everything in app to be owned

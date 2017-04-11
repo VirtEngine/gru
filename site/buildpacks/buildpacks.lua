@@ -16,12 +16,12 @@ gru_dir = "/var/lib/megam/gru/site/buildpacks/script/"
 
 packs = resource.shell.new("installbuildpackage")
 packs.state = "present"
-packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm  .. " "  .. tosca_type
+packs.command = "sh " .. gru_dir .. "install-buildpacks.sh " .. scm
 
 -- install ruby and basic require steps executed.
 json = resource.shell.new("json")
 json.state = "present"
-json.command = "sh " .. gru_dir .. "package.sh "  ..  scm
+json.command = "sh " .. gru_dir .. "package.sh "  ..  scm  .. " "  .. tosca_type
 json.require = {
   packs:ID(),
 }
