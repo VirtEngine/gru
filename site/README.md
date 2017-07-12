@@ -11,17 +11,21 @@ directory and add them to a Git repository, which you can use by
 your minions.
 
 ```bash
-$ cp -a site ~/gru-site
-$ cd ~/gru-site
+$ git clone https://github.com/megamsys/gru.git
+$ cd ~/gru
 $ git init
 $ git add
 $ git commit -m 'Initial commit of site repo'
-$ git checkout -b production
 ```
-
-Once you've got the site repo in Git you can start you minions by
-pointing them to your site repo, e.g.
+you want to write the lua code for example ,you create a directory with lua file like
+```bash
+$ cd ~/gru/site
+$ mkdir -p <directoryname>
+$ cd <directoryname>
+$ touch <filename>.lua
+```
+Once you've got the Gru repo in Git you can run the gru project by using this command, e.g.
 
 ```bash
-$ gructl serve --siterepo https://github.com/you/gru-site
+$ ~/gru/gulp/gructl apply  ~/gru/site/route/route.lua
 ```
