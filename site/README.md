@@ -1,31 +1,38 @@
 ## Site Repo
 
-This directory contains an example of a site repo for Gru.
+This directory contains the site repo for Gru we use in MegamVertice.
 
 A site repo in Gru is essentially a Git repository with branches,
 where each branch maps to an environment, which can be used by
 remote minions.
 
-In order to use this site repo, simply copy the contents of this
-directory and add them to a Git repository, which you can use by
-your minions.
+In order to use this site repo, and authoring a new `Gru recipe` is easy.
+
+### Lets say we want to create a recipe for `mongodb`
+
+1. Clone and simply copy the content of an existing directory into `mongodb` 
 
 ```bash
-$ git clone https://github.com/megamsys/gru.git
-$ cd ~/gru
-$ git init
-$ git add
-$ git commit -m 'Initial commit of site repo'
-```
-you want to write the lua code for example ,you create a directory with lua file like
-```bash
+
+$ git clone https://github.com/<your_github_id>/gru.git
+
 $ cd ~/gru/site
-$ mkdir -p <directoryname>
-$ cd <directoryname>
-$ touch <filename>.lua
+
+$ cp -r postgresql mongodb
+
+$ cd mongodb
+
+## change the name of postgresql to mongodb
+$ mv postgresql.lua mongodb.lua
+
+$ touch mongodb.lua
+
 ```
-Once you've got the Gru repo in Git you can run the gru project by using this command, e.g.
+
+Once you've got the `Gru recipe in mongodb.lua` fixed you can run the gru project by using this command, e.g.
 
 ```bash
+
 $ ~/gru/gulp/gructl apply  ~/gru/site/route/route.lua
+
 ```
