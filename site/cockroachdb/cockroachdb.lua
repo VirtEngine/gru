@@ -9,19 +9,19 @@ f()
 
 -- Check version is empty.
 
-if (version_ckdb == '') then
-  version_ckdb = '1.0.3'
+if (version == '') then
+  version = '1.0.3'
 end
 
 -- Wget cockroachdb package
 
 gck = resource.shell.new("download")
-gck.command = "wget https://binaries.cockroachdb.com/cockroach-v" .. version_ckdb .. ".linux-amd64.tgz"
+gck.command = "wget https://binaries.cockroachdb.com/cockroach-v" .. version .. ".linux-amd64.tgz"
 
 -- untar package
 
 utr = resource.shell.new("untar")
-utr.command = "tar xfz cockroach-v" .. version_ckdb .. ".linux-amd64.tgz"
+utr.command = "tar xfz cockroach-v" .. version .. ".linux-amd64.tgz"
 utr.require = {
 gck:ID(),
 }
@@ -30,7 +30,7 @@ gck:ID(),
 -- copy binary to path
 
 cpy = resource.shell.new("copy")
-cpy.command = "sudo cp -i cockroach-v" .. version_ckdb .. ".linux-amd64/cockroach /usr/local/bin"
+cpy.command = "sudo cp -i cockroach-v" .. version .. ".linux-amd64/cockroach /usr/local/bin"
 cpy.require = {
 utr:ID(),
 }

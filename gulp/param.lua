@@ -14,7 +14,3 @@ tosca_type = "nodejs"
 scm = "https://github.com/verticeapps/node_etherpad.git"
 
 version = "1.6.1"
-
-version_mdb= "3.4"
-
-version_ckdb= "1.0.3"

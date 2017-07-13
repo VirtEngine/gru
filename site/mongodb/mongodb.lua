@@ -9,19 +9,11 @@ f()
 gru_dir = "/var/lib/megam/gru/site/mongodb/script/"
 
 
--- Change mode for script file.
-
-mode = resource.shell.new("mode")
-mode.command = "chmod 755 " .. gru_dir .. "mongodb.sh"
-
 -- Adding the MongoDB Repository
 -- Run the script file.
 
 init = resource.shell.new("repo")
-init.command = " sh " gru_dir .. "mongodb.sh " .. version_mdb
-init.require = {
-  mode:ID(),
-}
+init.command = " sh " gru_dir .. "mongodb.sh " .. version
 
 -- Install mongodb package
 
@@ -43,5 +35,5 @@ svc.require = {
 
 
 -- Finally, register the resources to the catalog
-catalog:add(mode,init,pkg,svc)
+catalog:add(init,pkg,svc)
 
