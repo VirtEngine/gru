@@ -18,7 +18,7 @@ mode.command = "chmod 755 " .. gru_dir .. "mongodb.sh"
 -- Run the script file.
 
 init = resource.shell.new("repo")
-init.command = gru_dir .. "mongodb.sh " .. version_mdb
+init.command = " sh " gru_dir .. "mongodb.sh " .. version_mdb
 init.require = {
   mode:ID(),
 }
