@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Attributes.
-DIR=/var/lib
 version=$1
 
 # If the version is empty assign the latest version.
