@@ -13,7 +13,7 @@ f()
   version = '1.4.39'
 --end
 
-gru_dir = "/root/gru/site/memcache/scripts/"
+gru_dir = "/var/lib/megam/gru/site/memcache/scripts/"
 
 -- Change mode for script file.
 

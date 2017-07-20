@@ -4,9 +4,9 @@
 --
 
 -- get a attribute
-f = loadfile("/root/gru/gulp/param.lua")
+f = loadfile("/var/lib/megam/gru/gulp/param.lua")
 f()
-gru_dir = "/root/gru/site/influxdb/script/"
+gru_dir = "/var/lib/megam/gru/site/influxdb/script/"
 
 -- Change mode for script file.
 

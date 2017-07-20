@@ -3,7 +3,7 @@
 --
 
 -- get a attribute
-f = loadfile("/root/gru/gulp/param.lua")
+f = loadfile("/var/lib/megam/gru/gulp/param.lua")
 f()
 
 -- install openldap packages
