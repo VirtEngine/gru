@@ -1,40 +1,24 @@
-local lfs = require("libs/libkoreader-lfs")
-
 local DataStorage = {}
 
 local data_dir
 
-function DataStorage:getDataDir()
+function DataStorage:getBuildpackDir()
     if data_dir then return data_dir end
 
-    data_dir = os.getenv("RIOOS_HOME") .. "/"
-
-    if lfs.attributes(data_dir, "mode") ~= "directory" then
-        lfs.mkdir(data_dir)
-    end
+    data_dir = os.getenv("RIOOS_HOME") .. "/" .. "buildpacks"
 
     return data_dir
 end
 
-function DataStorage:getHistoryDir()
-    return self:getDataDir() .. "/history"
+function DataStorage:getBuildDir()
+    return self:getDataDir() .. "/builds"
 end
 
-function DataStorage:getSettingsDir()
-    return self:getDataDir() .. "/settings"
+function DataStorage:getCodeDir()
+    return self:getDataDir() .. "/builds" .. "/code"
 end
 
 local function initDataDir()
-    local sub_data_dirs = {
-        "cache", "clipboard", "data", "history",
-        "ota", "screenshots", "settings",
-    }
-    for _, dir in ipairs(sub_data_dirs) do
-        local sub_data_dir = DataStorage:getDataDir() .. "/" .. dir
-        if lfs.attributes(sub_data_dir, "mode") ~= "directory" then
-            lfs.mkdir(sub_data_dir)
-        end
-    end
 end
 
 initDataDir()
