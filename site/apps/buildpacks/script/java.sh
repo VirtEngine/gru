@@ -1,5 +1,7 @@
 tomcatdir=/opt/tomcat/conf/tomcat-users.xml
+
 service=/etc/systemd/system/tomcat.service
+
 cd  /opt
 
 wget https://s3-ap-southeast-1.amazonaws.com/megampub/gru/tomcat/apache-tomcat-8.0.42.tar.gz
@@ -23,25 +25,7 @@ cat > $tomcatdir << EOF
 </tomcat-users>
 EOF
 
-cat > $service << EOF
-[Unit]
-    Description=Apache Tomcat
-    After=syslog.target network.target
-[Service]
-    Type=forking
-    Environment=JAVA_HOME=/var/lib/megam/build/.jdk
-    Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
-    Environment=CATALINA_HOME=/opt/tomcat
-    Environment=CATALINA_BASE=/opt/tomcat
-    Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
-    Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
-    ExecStart=/opt/tomcat/bin/startup.sh
- [Install]
-    WantedBy=multi-user.target
-
-EOF
-
-chmod 755 $service
+#removed service
 
 cd /var/lib/megam/build
 arr=$(find . -path "**target/*.war")
