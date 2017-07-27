@@ -17,9 +17,11 @@ io.stdout:write([[
  [*] Current time: ]], os.date("%x-%X"), "\n\n")
 io.stdout:flush()
 
+require("setupenv")
+
 local DataStorage = require("datastorage")
 
-require("setupenv")
+local MruManager = require("mrumanager")
 
 local exit_code = nil
 
